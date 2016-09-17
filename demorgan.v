@@ -8,15 +8,24 @@ module demorgan
   output nA,
   output nB,
 
-  // Single bit output, ~A * ~B
-  output nA_and_nB
+  output not_A_and_B, // ~(A * B)
+  output nA_or_nB, // ~A + ~B
+  output not_A_or_B, // ~(A + B)
+  output nA_and_nB // Single bit output, ~A * ~B
 );
 
   wire nA;
   wire nB;
+  wire A_and_B;
+  wire A_or_B;
 
-  not inverat(nA, A);
-  not Binv(nB, B);
-  and andgate(nA_and_nB, nA, nB);
+  not (nA, A);
+  not (nB, B);
+  and (A_and_B, A, B);
+  or (A_or_B, A, B);
 
+  not (not_A_and_B, A_and_B);
+  or (nA_or_nB, nA, nB);
+  not (not_A_or_B, A_or_B);
+  and (nA_and_nB, nA, nB);
 endmodule
